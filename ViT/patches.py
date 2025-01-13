@@ -5,6 +5,8 @@ from PIL import Image  # Add import for PIL
 class PicToPatches(MovingCameraScene):
     def construct(self):
         # Parameters
+        self.camera.frame.save_state()
+
         patch_folder = "assets/images/image_patches_3x3"  # Path to your image
         grid_size = 3  # Number of rows and columns
         patch_scale = 0.3 # Scale factor for patches
@@ -111,38 +113,62 @@ class PicToPatches(MovingCameraScene):
         
         self.wait(1)
 
-        self.play(MovingCamera.auto_zoom(mobjects=patches_group[0], margin= 0,
-        only_mobjects_in_frame = False,
-        animate= True,))
+        self.play(self.camera.frame.animate.set(width=patches_group[0].width*2).move_to(patches_group[0]))
+        self.wait(1)
 
-        # Prepare for splitting: move patches slightly outwards
-        # center = patches_group.get_center()
-        # for patch in patches:
-        #     direction = patch.get_center() - center
-        #     if direction.get_length() == 0:  # handle a patch at the center
-        #         direction = UP * 0.2
-        #     else:
-        #         direction = direction / direction.get_length() * 0.2
-        #     patch.shift(direction)
+        self.play(FadeOut(patches_group[0]))
 
-        # self.play(patches_group.animate.arrange_in_grid(rows=grid_size, buff=0))
+        m1 = Tex("(132, 223, 23)")
+        m2 = Tex("(122, 253, 74)")
+        m3 = Tex("(112, 195, 111)")
+        m4 = Tex("(0, 253, 64)")
 
-        # self.wait(1)
+        # Scale down the RGB matrices
+        m1.scale(0.1)
+        m2.scale(0.1)
+        m3.scale(0.1)
+        m4.scale(0.1)
 
-        # Animate patches moving outward from the center
-        # animations = []
-        # for patch in patches:
-        #     direction = patch.get_center() - ORIGIN
-        #     # Normalize direction to avoid zero vector
-        #     if direction == ORIGIN:
-        #         direction = UP
-        #     else:
-        #         direction = direction / np.linalg.norm(direction)
-        #     # Shift patches outward
-        #     animations.append(patch.animate.shift(direction * 3))
-        # self.play(*animations, run_time=2)
-        # self.wait(1)
+        image_matrix = Matrix([
+            [255, 245, ".", ".", "."],
+            [67, 32, ".", ".", "."],
+            [".", ".", "", "", ""],
+            [".", ".", "", "", ""],
+            [".", ".", "", "", r"a_{m,n}"]
+        ]).scale(0.1)
+        
+        image_matrix.move_to(patches_group[0].get_center())  # Move matrix to the first patch's position
+        self.play(FadeIn(image_matrix))
+        self.play(image_matrix.animate.to_edge(LEFT, buff=1))
+        # Add axis labels around the matrix
+        label_image = Tex(r'$\mathbb{R}^{m \times n}$').scale(0.1).next_to(image_matrix, direction=UP, buff=0.1)
+        self.play(FadeIn(label_image))
 
-        # # Optionally, fade out the patches
-        # self.play(*[FadeOut(patch) for patch in patches])
-        # self.wait(1)
+
+        times = Tex(r'$\times$').scale(0.1)
+        times.move_to(patches_group[0].get_center())
+        self.play(FadeIn(times))    
+        self.wait(1)
+        embedding_matrix = Matrix([
+            [r"b_{1,1}", r"b_{1,2}", ".", ".", "."],
+            [r"b_{2,1}", r"b_{2,2}", ".", ".", "."],
+            [".", ".", "", "", ""],
+            [".", ".", "", "", ""],
+            [".", ".", "", "", r"b_{D,n}"]
+        ]).scale(0.1)
+        embedding_matrix.move_to(patches_group[0].get_center())
+        embedding_matrix.to_edge(LEFT, buff=1.8)
+        self.play(FadeIn(embedding_matrix))
+
+        # multi = Group(image_matrix, times, embedding_matrix).arrange_in_grid(rows=1, cols=3, buff=0.1)
+        # multi.move_to(patches_group[0].get_center())
+        # self.play(multi.animate.to_edge(LEFT, buff=1))
+        # self.play(FadeIn(multi))
+
+        label_embedding = Tex(r'$\mathbb{R}^{D \times n}$').scale(0.1).next_to(embedding_matrix, direction=UP, buff=0.1)
+        self.play(FadeIn(label_embedding))
+        
+        self.wait(1)
+        self.play(Restore(self.camera.frame))
+        self.wait(1)
+        # self.play(self.camera.frame.animate.set(width=patches_group.width*2).move_to(patches_group))
