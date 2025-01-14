@@ -1,8 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/Users/jonathangong/Code/Repositories/Manim Projects/ViT/media/videos/patches/1080p60/partial_movie_files/PicToPatches/3529212410_2869509132_223132457.mp4'
-file 'file:/Users/jonathangong/Code/Repositories/Manim Projects/ViT/media/videos/patches/1080p60/partial_movie_files/PicToPatches/3040924799_3890345977_3431764081.mp4'
-file 'file:/Users/jonathangong/Code/Repositories/Manim Projects/ViT/media/videos/patches/1080p60/partial_movie_files/PicToPatches/3040924799_587929963_2108644009.mp4'
-file 'file:/Users/jonathangong/Code/Repositories/Manim Projects/ViT/media/videos/patches/1080p60/partial_movie_files/PicToPatches/3040924799_3890345977_2138899131.mp4'
-file 'file:/Users/jonathangong/Code/Repositories/Manim Projects/ViT/media/videos/patches/1080p60/partial_movie_files/PicToPatches/3040924799_679863879_2935492632.mp4'
-file 'file:/Users/jonathangong/Code/Repositories/Manim Projects/ViT/media/videos/patches/1080p60/partial_movie_files/PicToPatches/3040924799_2812105225_2935492632.mp4'
-file 'file:/Users/jonathangong/Code/Repositories/Manim Projects/ViT/media/videos/patches/1080p60/partial_movie_files/PicToPatches/3040924799_3890345977_4082070681.mp4'
