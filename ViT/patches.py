@@ -130,8 +130,8 @@ class PicToPatches(MovingCameraScene):
         m4.scale(0.1)
 
         image_matrix = Matrix([
-            [255, 245, ".", ".", "."],
-            [67, 32, ".", ".", "."],
+            [r"a_{1,1}", r"a_{1,2}", ".", ".", "."],
+            [r"a_{2,1}", r"a_{2,2}", ".", ".", "."],
             [".", ".", "", "", ""],
             [".", ".", "", "", ""],
             [".", ".", "", "", r"a_{m,n}"]
@@ -139,11 +139,28 @@ class PicToPatches(MovingCameraScene):
         
         image_matrix.move_to(patches_group[0].get_center())  # Move matrix to the first patch's position
         self.play(FadeIn(image_matrix))
-        self.play(image_matrix.animate.to_edge(LEFT, buff=1))
+        
         # Add axis labels around the matrix
-        label_image = Tex(r'$\mathbb{R}^{m \times n}$').scale(0.1).next_to(image_matrix, direction=UP, buff=0.1)
+        label_image = Tex(r'$\mathbb{R}^{m \times n}$').scale(0.1).next_to(image_matrix, direction=UP, buff=0.05)
         self.play(FadeIn(label_image))
+        note_image = Tex(r'Each value in the matrix is an rgb value with 3 channels').scale(0.1).next_to(image_matrix, direction=UP, buff=0.15)
+        self.play(FadeIn(note_image))
+        self.wait(1)
+        self.play(FadeOut(note_image))
+        self.play(FadeOut(label_image))
+        self.wait(1)
 
+        image_matrix_2 = Matrix([
+            [r"a_{1}", r"a_{2}", r"a_{3}", r"\cdot", r"\cdot", r"a_{m \times n}"]
+        ], h_buff=1.1).scale(0.1).move_to(patches_group[0].get_center())
+        
+        # Shift the centered dots to the left
+        image_matrix_2.get_entries()[3].shift(LEFT * 0.03).shift(UP * 0.013)
+        image_matrix_2.get_entries()[4].shift(LEFT * 0.07).shift(UP * 0.013)
+
+        self.play(Transform(image_matrix, image_matrix_2))
+        self.wait(1)
+        self.play(image_matrix.animate.to_edge(LEFT, buff=1))
 
         times = Tex(r'$\times$').scale(0.1)
         times.move_to(patches_group[0].get_center())
@@ -160,15 +177,11 @@ class PicToPatches(MovingCameraScene):
         embedding_matrix.to_edge(LEFT, buff=1.8)
         self.play(FadeIn(embedding_matrix))
 
-        # multi = Group(image_matrix, times, embedding_matrix).arrange_in_grid(rows=1, cols=3, buff=0.1)
-        # multi.move_to(patches_group[0].get_center())
-        # self.play(multi.animate.to_edge(LEFT, buff=1))
-        # self.play(FadeIn(multi))
-
         label_embedding = Tex(r'$\mathbb{R}^{D \times n}$').scale(0.1).next_to(embedding_matrix, direction=UP, buff=0.1)
         self.play(FadeIn(label_embedding))
-        
+        label_image = Tex(r'$\mathbb{R}^{m \times n}$').scale(0.1).next_to(image_matrix, direction=UP, buff=0.1)
+        self.play(FadeIn(label_image))
         self.wait(1)
         self.play(Restore(self.camera.frame))
         self.wait(1)
-        # self.play(self.camera.frame.animate.set(width=patches_group.width*2).move_to(patches_group))
+
