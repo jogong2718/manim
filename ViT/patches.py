@@ -118,70 +118,120 @@ class PicToPatches(MovingCameraScene):
 
         self.play(FadeOut(patches_group[0]))
 
-        m1 = Tex("(132, 223, 23)")
-        m2 = Tex("(122, 253, 74)")
-        m3 = Tex("(112, 195, 111)")
-        m4 = Tex("(0, 253, 64)")
-
-        # Scale down the RGB matrices
-        m1.scale(0.1)
-        m2.scale(0.1)
-        m3.scale(0.1)
-        m4.scale(0.1)
-
         image_matrix = Matrix([
-            [r"a_{1,1}", r"a_{1,2}", ".", ".", "."],
-            [r"a_{2,1}", r"a_{2,2}", ".", ".", "."],
+            [r"a_{11}", r"a_{12}", ".", ".", "."],
+            [r"a_{21}", r"a_{22}", ".", ".", "."],
             [".", ".", "", "", ""],
             [".", ".", "", "", ""],
-            [".", ".", "", "", r"a_{m,n}"]
+            [".", ".", "", "", r"a_{pp}"]
         ]).scale(0.1)
         
         image_matrix.move_to(patches_group[0].get_center())  # Move matrix to the first patch's position
         self.play(FadeIn(image_matrix))
         
         # Add axis labels around the matrix
-        label_image = Tex(r'$\mathbb{R}^{m \times n}$').scale(0.1).next_to(image_matrix, direction=UP, buff=0.05)
+        label_image = Tex(r'$\mathbb{R}^{p \times p \times c}$').scale(0.1).next_to(image_matrix, direction=UP, buff=0.05)
         self.play(FadeIn(label_image))
-        note_image = Tex(r'Each value in the matrix is an rgb value with 3 channels').scale(0.1).next_to(image_matrix, direction=UP, buff=0.15)
+        note_image = Tex(r'Each value in the matrix has c channels. Usually 3 for RGB values').scale(0.1).next_to(image_matrix, direction=UP, buff=0.15)
         self.play(FadeIn(note_image))
         self.wait(1)
         self.play(FadeOut(note_image))
         self.play(FadeOut(label_image))
         self.wait(1)
 
+        note_image = Tex(r'$i = p^{2}c$').scale(0.1).next_to(image_matrix, direction=UP, buff=0.15)
+        self.play(FadeIn(note_image))
+        self.wait(1)
+        self.play(FadeOut(note_image))
+
         image_matrix_2 = Matrix([
-            [r"a_{1}", r"a_{2}", r"a_{3}", r"\cdot", r"\cdot", r"a_{m \times n}"]
+            [r"a_{1}"], 
+            [r"a_{2}"], 
+            [r"a_{3}"], 
+            [r"\cdot"], 
+            [r"\cdot"], 
+            [r"a_{i}"]
         ], h_buff=1.1).scale(0.1).move_to(patches_group[0].get_center())
         
-        # Shift the centered dots to the left
-        image_matrix_2.get_entries()[3].shift(LEFT * 0.03).shift(UP * 0.013)
-        image_matrix_2.get_entries()[4].shift(LEFT * 0.07).shift(UP * 0.013)
+        # Shift the centered dots up
+        image_matrix_2.get_entries()[3].shift(UP * 0.013).shift(LEFT * 0.015)
+        image_matrix_2.get_entries()[4].shift(UP * 0.013).shift(LEFT * 0.015)
 
         self.play(Transform(image_matrix, image_matrix_2))
         self.wait(1)
         self.play(image_matrix.animate.to_edge(LEFT, buff=1))
 
-        times = Tex(r'$\times$').scale(0.1)
+        times = Tex(r'$\cdot$').scale(0.3)
         times.move_to(patches_group[0].get_center())
+        times.shift(LEFT * 0.47)
         self.play(FadeIn(times))    
         self.wait(1)
         embedding_matrix = Matrix([
-            [r"b_{1,1}", r"b_{1,2}", ".", ".", "."],
-            [r"b_{2,1}", r"b_{2,2}", ".", ".", "."],
+            [r"b_{11}", r"b_{12}", ".", ".", "."],
+            [r"b_{21}", r"b_{22}", ".", ".", "."],
             [".", ".", "", "", ""],
             [".", ".", "", "", ""],
-            [".", ".", "", "", r"b_{D,n}"]
+            [".", ".", "", "", r"b_{Di}"]
         ]).scale(0.1)
         embedding_matrix.move_to(patches_group[0].get_center())
-        embedding_matrix.to_edge(LEFT, buff=1.8)
+        embedding_matrix.to_edge(LEFT, buff=1.4)
         self.play(FadeIn(embedding_matrix))
 
-        label_embedding = Tex(r'$\mathbb{R}^{D \times n}$').scale(0.1).next_to(embedding_matrix, direction=UP, buff=0.1)
+        label_embedding = Tex(r'$\mathbb{R}^{D \times i}$').scale(0.1).next_to(embedding_matrix, direction=UP, buff=0.1)
         self.play(FadeIn(label_embedding))
-        label_image = Tex(r'$\mathbb{R}^{m \times n}$').scale(0.1).next_to(image_matrix, direction=UP, buff=0.1)
+        label_image = Tex(r'$\mathbb{R}^{i}$').scale(0.1).next_to(image_matrix, direction=UP, buff=0.1)
         self.play(FadeIn(label_image))
         self.wait(1)
+
+        plus = Tex(r'$+$').scale(0.1)
+        plus.move_to(patches_group[0].get_center())
+        plus.shift(RIGHT * 0.45)
+        self.play(FadeIn(plus))    
+        self.wait(1)
+
+        bias_matrix = Matrix([
+            [r"c_{1}"], 
+            [r"c_{2}"], 
+            [r"c_{3}"], 
+            [r"\cdot"], 
+            [r"\cdot"], 
+            [r"c_{D}"]
+        ]).scale(0.1)
+        bias_matrix.get_entries()[3].shift(UP * 0.013).shift(LEFT * 0.015)
+        bias_matrix.get_entries()[4].shift(UP * 0.013).shift(LEFT * 0.015)
+
+        bias_matrix.move_to(patches_group[0].get_center())
+        bias_matrix.to_edge(LEFT, buff=2.3)
+        self.play(FadeIn(bias_matrix))
+        self.wait(1)
+
+        label_bias = Tex(r'$\mathbb{R}^{D}$').scale(0.1).next_to(bias_matrix, direction=UP, buff=0.1)
+        label_bias.shift(RIGHT * 0.01)
+        self.play(FadeIn(label_bias))
+        self.wait(1)
+
+        self.play(FadeOut(image_matrix), FadeOut(embedding_matrix), FadeOut(bias_matrix), FadeOut(label_bias), FadeOut(label_image), FadeOut(label_embedding), FadeOut(plus), FadeOut(times))
+        self.wait(1)
+
+        embedded_matrix = Matrix([
+            [r"e_{1}"], 
+            [r"e_{2}"], 
+            [r"e_{3}"], 
+            [r"\cdot"], 
+            [r"\cdot"], 
+            [r"e_{D}"]
+        ]).scale(0.1)
+        embedded_matrix.get_entries()[3].shift(UP * 0.013).shift(LEFT * 0.015)
+        embedded_matrix.get_entries()[4].shift(UP * 0.013).shift(LEFT * 0.015)
+
+        embedded_matrix.move_to(patches_group[0].get_center())
+        self.play(FadeIn(embedded_matrix))
+        self.wait(1)
+        
+        label_embedded = Tex(r'$\mathbb{R}^{D}$').scale(0.1).next_to(embedded_matrix, direction=UP, buff=0.1)
+        self.play(FadeIn(label_embedded))
+        self.wait(1)
+
         self.play(Restore(self.camera.frame))
         self.wait(1)
 
