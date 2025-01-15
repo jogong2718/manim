@@ -262,7 +262,8 @@ class PicToPatches(MovingCameraScene):
 
         self.play(
             Restore(self.camera.frame),
-            first_item.animate.scale(10)
+            first_item.animate.scale(10),
+            FadeOut(image_matrix)
         )
 
         second_item = Tex(r"$X_{2}$")
@@ -303,6 +304,66 @@ class PicToPatches(MovingCameraScene):
             FadeOut(patches_group[8]),
             FadeIn(ninth_item)
             )
-
+        
         self.wait(1)
+
+        firstadd = Tex(r"$+$").next_to(first_item, direction=DOWN, buff=0.1)
+        secondadd = Tex(r"$+$").next_to(second_item, direction=DOWN, buff=0.1)
+        thirdadd = Tex(r"$+$").next_to(third_item, direction=DOWN, buff=0.1)
+        fourthadd = Tex(r"$+$").next_to(fourth_item, direction=DOWN, buff=0.1)
+        fifthadd = Tex(r"$+$").next_to(fifth_item, direction=DOWN, buff=0.1)
+        sixthadd = Tex(r"$+$").next_to(sixth_item, direction=DOWN, buff=0.1)
+        seventhadd = Tex(r"$+$").next_to(seventh_item, direction=DOWN, buff=0.1)
+        eighthadd = Tex(r"$+$").next_to(eighth_item, direction=DOWN, buff=0.1)
+        ninthadd = Tex(r"$+$").next_to(ninth_item, direction=DOWN, buff=0.1)
+
+        self.play(
+            FadeIn(firstadd),
+            FadeIn(secondadd),
+            FadeIn(thirdadd),
+            FadeIn(fourthadd),
+            FadeIn(fifthadd),
+            FadeIn(sixthadd),
+            FadeIn(seventhadd),
+            FadeIn(eighthadd),
+            FadeIn(ninthadd)
+        )
+
+        first_item_encoding = Tex(r"$P_{1}$")
+        second_item_encoding = Tex(r"$P_{2}$")
+        third_item_encoding = Tex(r"$P_{3}$")
+        fourth_item_encoding = Tex(r"$P_{4}$")
+        fifth_item_encoding = Tex(r"$P_{5}$")
+        sixth_item_encoding = Tex(r"$P_{6}$")
+        seventh_item_encoding = Tex(r"$P_{7}$")
+        eighth_item_encoding = Tex(r"$P_{8}$")
+        ninth_item_encoding = Tex(r"$P_{9}$")
+
+        first_item_encoding.next_to(first_item, direction=DOWN, buff=0.6)
+        second_item_encoding.next_to(second_item, direction=DOWN, buff=0.6)
+        third_item_encoding.next_to(third_item, direction=DOWN, buff=0.6)
+        fourth_item_encoding.next_to(fourth_item, direction=DOWN, buff=0.6)
+        fifth_item_encoding.next_to(fifth_item, direction=DOWN, buff=0.6)
+        sixth_item_encoding.next_to(sixth_item, direction=DOWN, buff=0.6)
+        seventh_item_encoding.next_to(seventh_item, direction=DOWN, buff=0.6)
+        eighth_item_encoding.next_to(eighth_item, direction=DOWN, buff=0.6)
+        ninth_item_encoding.next_to(ninth_item, direction=DOWN, buff=0.6)
+
+        self.play(
+            FadeIn(first_item_encoding),
+            FadeIn(second_item_encoding),
+            FadeIn(third_item_encoding),
+            FadeIn(fourth_item_encoding),
+            FadeIn(fifth_item_encoding),
+            FadeIn(sixth_item_encoding),
+            FadeIn(seventh_item_encoding),
+            FadeIn(eighth_item_encoding),
+            FadeIn(ninth_item_encoding)
+            )
+        
+        self.wait(1)
+
+        encoding_explanation = Tex(r"Each patch has a learnable positional encoding vector in $\mathbb{R}^{D}$ added to it ").scale(0.7)
+
+        self.play(Write(encoding_explanation))
 
