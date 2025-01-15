@@ -210,9 +210,6 @@ class PicToPatches(MovingCameraScene):
         self.play(FadeIn(label_bias))
         self.wait(1)
 
-        self.play(FadeOut(image_matrix), FadeOut(embedding_matrix), FadeOut(bias_matrix), FadeOut(label_bias), FadeOut(label_image), FadeOut(label_embedding), FadeOut(plus), FadeOut(times))
-        self.wait(1)
-
         embedded_matrix = Matrix([
             [r"e_{1}"], 
             [r"e_{2}"], 
@@ -223,15 +220,89 @@ class PicToPatches(MovingCameraScene):
         ]).scale(0.1)
         embedded_matrix.get_entries()[3].shift(UP * 0.013).shift(LEFT * 0.015)
         embedded_matrix.get_entries()[4].shift(UP * 0.013).shift(LEFT * 0.015)
-
         embedded_matrix.move_to(patches_group[0].get_center())
-        self.play(FadeIn(embedded_matrix))
+
+        self.play(
+            Transform(image_matrix, embedded_matrix),
+            Transform(embedding_matrix, embedded_matrix),
+            Transform(bias_matrix, embedded_matrix),
+            FadeOut(label_bias),
+            FadeOut(label_image),
+            FadeOut(label_embedding),
+            FadeOut(plus),
+            FadeOut(times)
+        )
+        # self.play(FadeOut(image_matrix), FadeOut(embedding_matrix), FadeOut(bias_matrix), FadeOut(label_bias), FadeOut(label_image), FadeOut(label_embedding), FadeOut(plus), FadeOut(times))
+
         self.wait(1)
+
+        # self.play(FadeIn(embedded_matrix))
+        # self.wait(1)
         
         label_embedded = Tex(r'$\mathbb{R}^{D}$').scale(0.1).next_to(embedded_matrix, direction=UP, buff=0.1)
+        label_embedded.shift(RIGHT * 0.01)
         self.play(FadeIn(label_embedded))
         self.wait(1)
+        self.play(FadeOut(label_embedded))
 
-        self.play(Restore(self.camera.frame))
+        first_item = Tex(r"$X_{1}$").scale(0.1)
+        first_item.move_to(embedded_matrix.get_center())
+
+        self.play(
+            Transform(embedded_matrix, first_item),
+            Transform(image_matrix, first_item),
+            Transform(embedding_matrix, first_item),
+            Transform(bias_matrix, first_item),
+            FadeOut(embedded_matrix),
+            FadeOut(embedding_matrix),
+            FadeOut(bias_matrix)
+            )
+        
+        self.wait(1)
+
+        self.play(
+            Restore(self.camera.frame),
+            first_item.animate.scale(10)
+        )
+
+        second_item = Tex(r"$X_{2}$")
+        third_item = Tex(r"$X_{3}$")
+        fourth_item = Tex(r"$X_{4}$")
+        fifth_item = Tex(r"$X_{5}$")
+        sixth_item = Tex(r"$X_{6}$")
+        seventh_item = Tex(r"$X_{7}$")
+        eighth_item = Tex(r"$X_{8}$")
+        ninth_item = Tex(r"$X_{9}$")
+
+        second_item.move_to(patches_group[1].get_center())
+        third_item.move_to(patches_group[2].get_center())
+        fourth_item.move_to(patches_group[3].get_center())
+        fifth_item.move_to(patches_group[4].get_center())
+        sixth_item.move_to(patches_group[5].get_center())
+        seventh_item.move_to(patches_group[6].get_center())
+        eighth_item.move_to(patches_group[7].get_center())
+        ninth_item.move_to(patches_group[8].get_center())
+
+        self.wait(1)
+
+        self.play(
+            FadeOut(patches_group[1]), 
+            FadeIn(second_item),
+            FadeOut(patches_group[2]),
+            FadeIn(third_item),
+            FadeOut(patches_group[3]),
+            FadeIn(fourth_item),
+            FadeOut(patches_group[4]),
+            FadeIn(fifth_item),
+            FadeOut(patches_group[5]),
+            FadeIn(sixth_item),
+            FadeOut(patches_group[6]),
+            FadeIn(seventh_item),
+            FadeOut(patches_group[7]),
+            FadeIn(eighth_item),
+            FadeOut(patches_group[8]),
+            FadeIn(ninth_item)
+            )
+
         self.wait(1)
 
