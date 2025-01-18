@@ -80,9 +80,8 @@ class PicToPatches(MovingCameraScene):
         patches_group_2.arrange_in_grid(rows=grid_size, buff=0)  # No spacing between patches
 
         # Display the assembled image
-        self.play(FadeIn(patches_group_2))
         self.play(FadeOut(patches_group))
-
+        self.play(FadeIn(patches_group_2))
 
         self.play(patches_group_2.animate.arrange_in_grid(rows=grid_size, buff=0.5))
         self.wait(1)
