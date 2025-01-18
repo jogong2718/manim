@@ -2,3 +2,5 @@ venv/
 .DS_Store
 media/
 __pycache__/
+requirements2.txt
+/Users/yanajakhwal/Desktop/Projects/manim/ViT/__pycache__
