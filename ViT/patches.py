@@ -158,7 +158,7 @@ class PicToPatches(MovingCameraScene):
 
         self.play(Transform(image_matrix, image_matrix_2))
         self.wait(1)
-        self.play(image_matrix.animate.to_edge(LEFT, buff=1.4))
+        self.play(image_matrix.animate.to_edge(LEFT, buff=1.75))
 
         # times = Tex(r'$\cdot$').scale(0.3)
         # times.move_to(patches_group[0].get_center())
@@ -184,7 +184,7 @@ class PicToPatches(MovingCameraScene):
 
         plus = Tex(r'$+$').scale(0.1)
         plus.move_to(patches_group[0].get_center())
-        plus.shift(RIGHT * 0.45)
+        plus.shift(RIGHT * 0.30)
         self.play(FadeIn(plus))    
         self.wait(1)
 
@@ -200,7 +200,7 @@ class PicToPatches(MovingCameraScene):
         bias_matrix.get_entries()[4].shift(UP * 0.013).shift(LEFT * 0.015)
 
         bias_matrix.move_to(patches_group[0].get_center())
-        bias_matrix.to_edge(LEFT, buff=2.3)
+        bias_matrix.to_edge(LEFT, buff=2.1)
         self.play(FadeIn(bias_matrix))
         self.wait(1)
 
