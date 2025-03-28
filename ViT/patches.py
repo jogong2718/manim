@@ -158,12 +158,12 @@ class PicToPatches(MovingCameraScene):
 
         self.play(Transform(image_matrix, image_matrix_2))
         self.wait(1)
-        self.play(image_matrix.animate.to_edge(LEFT, buff=1))
+        self.play(image_matrix.animate.to_edge(LEFT, buff=1.4))
 
-        times = Tex(r'$\cdot$').scale(0.3)
-        times.move_to(patches_group[0].get_center())
-        times.shift(LEFT * 0.47)
-        self.play(FadeIn(times))    
+        # times = Tex(r'$\cdot$').scale(0.3)
+        # times.move_to(patches_group[0].get_center())
+        # times.shift(LEFT * 0.47)
+        # self.play(FadeIn(times))    
         self.wait(1)
         embedding_matrix = Matrix([
             [r"b_{11}", r"b_{12}", ".", ".", "."],
@@ -173,7 +173,7 @@ class PicToPatches(MovingCameraScene):
             [".", ".", "", "", r"b_{Di}"]
         ]).scale(0.1)
         embedding_matrix.move_to(patches_group[0].get_center())
-        embedding_matrix.to_edge(LEFT, buff=1.4)
+        embedding_matrix.to_edge(LEFT, buff=1)
         self.play(FadeIn(embedding_matrix))
 
         label_embedding = Tex(r'$\mathbb{R}^{D \times i}$').scale(0.1).next_to(embedding_matrix, direction=UP, buff=0.1)
@@ -228,8 +228,7 @@ class PicToPatches(MovingCameraScene):
             FadeOut(label_bias),
             FadeOut(label_image),
             FadeOut(label_embedding),
-            FadeOut(plus),
-            FadeOut(times)
+            FadeOut(plus)
         )
         # self.play(FadeOut(image_matrix), FadeOut(embedding_matrix), FadeOut(bias_matrix), FadeOut(label_bias), FadeOut(label_image), FadeOut(label_embedding), FadeOut(plus), FadeOut(times))
 

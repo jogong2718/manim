@@ -11,7 +11,7 @@ This repository contains various Manim projects demonstrating AI technologies an
 3. Use the following command to generate an MP4 video (here using patches.py as an example):
 
    ```bash
-   manim -pqh patches.py PicToPatches
+   manim -pql patches.py PicToPatches
    ```
 
    - -p: Preview the output video after rendering.
