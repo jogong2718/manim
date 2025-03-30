@@ -200,7 +200,7 @@ class PicToPatches(MovingCameraScene):
         bias_matrix.get_entries()[4].shift(UP * 0.013).shift(LEFT * 0.015)
 
         bias_matrix.move_to(patches_group[0].get_center())
-        bias_matrix.to_edge(LEFT, buff=2.0)
+        bias_matrix.to_edge(LEFT, buff=2.2)
         self.play(FadeIn(bias_matrix))
         self.wait(1)
 
