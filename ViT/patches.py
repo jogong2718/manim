@@ -378,15 +378,15 @@ class PicToPatches(MovingCameraScene):
         self.wait(1)
 
         # Create the CLS token
-        cls_token = Tex(r"$CLS$").scale(0.1).set_color(YELLOW)
+        cls_token = Tex(r"$CLS$").set_color(YELLOW)
         
         # Get the leftmost position (position of first item) and shift left for CLS token
-        left_position = first_item.get_center() + LEFT * 1.5
+        left_position = first_item.get_center() + LEFT * 1
         cls_token.move_to(left_position)
         
         # Create + symbol and positional encoding for CLS token
-        cls_add = Tex(r"$+$").next_to(cls_token, direction=DOWN, buff=0.1)
-        cls_encoding = Tex(r"$P_{0}$").next_to(cls_token, direction=DOWN, buff=0.6)
+        cls_add = Tex(r"$+$").next_to(cls_token, direction=DOWN, buff=0.3)
+        cls_encoding = Tex(r"$C$").next_to(cls_token, direction=DOWN, buff=0.6)
         
         # Group all existing items to shift right
         item_group = VGroup(
@@ -401,7 +401,7 @@ class PicToPatches(MovingCameraScene):
         
         # Animate the shift right and introduce CLS token
         self.play(
-            item_group.animate.shift(RIGHT * 0.8),
+            item_group.animate.shift(RIGHT * 0.5),
             FadeIn(cls_token),
             FadeIn(cls_add),
             FadeIn(cls_encoding)
