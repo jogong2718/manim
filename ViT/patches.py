@@ -365,3 +365,54 @@ class PicToPatches(MovingCameraScene):
 
         self.play(Write(encoding_explanation))
 
+        self.wait(1)
+        self.play(FadeOut(encoding_explanation))
+        self.wait(1)
+
+        cls_token_explanation = Tex(r"Classification tasks require a class token (CLS) similar to the one introduced in BERT").scale(0.7) 
+
+        self.play(Write(cls_token_explanation))
+
+        self.wait(1)
+        self.play(FadeOut(cls_token_explanation))
+        self.wait(1)
+
+        # Create the CLS token
+        cls_token = Tex(r"$CLS$").scale(0.1).set_color(YELLOW)
+        
+        # Get the leftmost position (position of first item) and shift left for CLS token
+        left_position = first_item.get_center() + LEFT * 1.5
+        cls_token.move_to(left_position)
+        
+        # Create + symbol and positional encoding for CLS token
+        cls_add = Tex(r"$+$").next_to(cls_token, direction=DOWN, buff=0.1)
+        cls_encoding = Tex(r"$P_{0}$").next_to(cls_token, direction=DOWN, buff=0.6)
+        
+        # Group all existing items to shift right
+        item_group = VGroup(
+            first_item, second_item, third_item, fourth_item, fifth_item, 
+            sixth_item, seventh_item, eighth_item, ninth_item,
+            firstadd, secondadd, thirdadd, fourthadd, fifthadd, 
+            sixthadd, seventhadd, eighthadd, ninthadd,
+            first_item_encoding, second_item_encoding, third_item_encoding,
+            fourth_item_encoding, fifth_item_encoding, sixth_item_encoding,
+            seventh_item_encoding, eighth_item_encoding, ninth_item_encoding
+        )
+        
+        # Animate the shift right and introduce CLS token
+        self.play(
+            item_group.animate.shift(RIGHT * 0.8),
+            FadeIn(cls_token),
+            FadeIn(cls_add),
+            FadeIn(cls_encoding)
+        )
+        
+        self.wait(1)
+        
+        cls_explanation = Tex(r"The CLS token output is used for classification tasks").scale(0.7).to_edge(DOWN)
+        self.play(Write(cls_explanation))
+        self.wait(1)
+        self.play(FadeOut(cls_explanation))
+        
+        # Continue with the rest of your code...
+
